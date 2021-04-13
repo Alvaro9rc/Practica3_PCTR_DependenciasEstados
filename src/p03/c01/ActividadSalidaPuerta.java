@@ -7,9 +7,6 @@ import java.util.logging.Logger;
 
 public class ActividadSalidaPuerta implements Runnable{
 
-	//
-	// TODO
-	//
 	
 	private static final int NUMSALIDAS = 20;
 	private String puerta;
