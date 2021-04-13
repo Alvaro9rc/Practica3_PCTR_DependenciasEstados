@@ -6,17 +6,31 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Clase ActividadEntradaPuerta.
+ * Gestiona las entradas por una puerta.
+ * 
+ * @author Álvaro Rodríguez Carpintero
+ * @author Alberto Porres Fernandez
+ */
 public class ActividadEntradaPuerta implements Runnable{
-
+	
+		// variables de clase
 		private static final int NUMENTRADAS = 20;
 		private String puerta;
 		private IParque parque;
 
+		/**
+		 * Constructor de la clase.
+		 */
 		public ActividadEntradaPuerta(String puerta, IParque parque) {
 			this.puerta = puerta;
 			this.parque = parque;
 		}
 
+		/**
+		 * Método run.
+		 */
 		@Override
 		public void run() {
 			for (int i = 0; i < NUMENTRADAS; i ++) {

@@ -1,9 +1,22 @@
 package p03.c01;
 
+
+/**
+ * Clase SistemaLanzador.
+ * Inicia la ejecución del sistema.
+ * 
+ * @author Álvaro Rodríguez Carpintero
+ * @author Alberto Porres Fernandez
+ */
 public class SistemaLanzador {
+	
+	/**
+	 * Método main.
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		
-		IParque parque = new Parque(); // TODO
+		IParque parque = new Parque();
 		char letra_puerta = 'A';
 		
 		System.out.println("¡Parque abierto!");
@@ -15,11 +28,7 @@ public class SistemaLanzador {
 			// Creacion de hilos de entrada
 			ActividadEntradaPuerta entradas = new ActividadEntradaPuerta(puerta, parque);
 			new Thread (entradas).start();
-			
-			// 
-			// TODO Puede que este OK
-			//
-			
+
 			// Creacion de hilos de entrada
 			ActividadSalidaPuerta salidas = new ActividadSalidaPuerta(puerta, parque);
 			new Thread (salidas).start();
