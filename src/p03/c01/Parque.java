@@ -10,11 +10,15 @@ public class Parque implements IParque{
 	private int contadorPersonasTotales;
 	private Hashtable<String, Integer> contadoresPersonasPuerta;
 	
+	private int entradasEnCola;
+	private int salidasEnCola;
+
 	
 	public Parque() {	// TODO
 		contadorPersonasTotales = 0;
 		contadoresPersonasPuerta = new Hashtable<String, Integer>();
-		// TODO
+		entradasEnCola = 0;
+		salidasEnCola = 0;
 	}
 
 
@@ -26,7 +30,7 @@ public class Parque implements IParque{
 			contadoresPersonasPuerta.put(puerta, 0);
 		}
 		
-		// TODO (abajo)
+		// TODO
 		comprobarAntesDeEntrar();
 				
 		
@@ -38,16 +42,17 @@ public class Parque implements IParque{
 		imprimirInfo(puerta, "Entrada");
 		
 		// TODO
-		
+		checkInvariante();
 		
 		// TODO
+		if (entradasEnCola == 0)
+			notify();
 		
 	}
 	
 	// 
 	// TODO Metodo salirDelParque
 	//
-	
 	@Override
 	public synchronized void salirDelParque(String puerta) {
 		// TODO Auto-generated method stub
@@ -56,7 +61,7 @@ public class Parque implements IParque{
 		if (contadoresPersonasPuerta.get(puerta) == null){
 			contadoresPersonasPuerta.put(puerta, 0);
 		}
-				
+		
 		// TODO
 		comprobarAntesDeSalir();
 						
@@ -69,9 +74,11 @@ public class Parque implements IParque{
 		imprimirInfo(puerta, "Salida");
 				
 		// TODO
-				
+		checkInvariante();
 				
 		// TODO
+		if (salidasEnCola == 0)
+			notify();
 	}
 	
 	
@@ -97,24 +104,39 @@ public class Parque implements IParque{
 	
 	protected void checkInvariante() {
 		assert sumarContadoresPuerta() == contadorPersonasTotales : "INV: La suma de contadores de las puertas debe ser igual al valor del contador del parte";
-		assert MIN <= contadorPersonasTotales : "INV: Debe haber entre 0 y 50 personas en el parque";
-		assert MAX >= contadorPersonasTotales : "INV: Debe haber entre 0 y 50 personas en el parque";
+		assert MIN <= contadorPersonasTotales : "INV: No puede haber menos de 0 personas";
+		assert MAX >= contadorPersonasTotales : "INV: No puede haber mas de 50 personas";
 	}
 
-	protected void comprobarAntesDeEntrar(){	// TODO
-		//
-		// TODO
-		//
+	protected void comprobarAntesDeEntrar(){	
+
+		if (contadorPersonasTotales == MAX) {
+			try {
+				entradasEnCola ++;
+				wait();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else if(salidasEnCola > 0)
+			salidasEnCola --;
 	}
 
-	protected void comprobarAntesDeSalir(){		// TODO
-		//
-		// TODO
-		//
-	}
-
-
+	protected void comprobarAntesDeSalir(){		
 	
-
-
+		if (contadorPersonasTotales == MIN) {
+			try {
+				salidasEnCola ++;
+				wait();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else if(entradasEnCola > 0)
+			entradasEnCola --;
+		
+	}
 }
+
+
+

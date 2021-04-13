@@ -22,6 +22,8 @@ public class ActividadEntradaPuerta implements Runnable{
 			for (int i = 0; i < NUMENTRADAS; i ++) {
 				try {
 					parque.entrarAlParque(puerta);
+					
+					// Cuanto más bajo sea este valor mayor será el tráfico de entrada 	
 					TimeUnit.MILLISECONDS.sleep(new Random().nextInt(5)*1000);
 				} catch (InterruptedException e) {
 					Logger.getGlobal().log(Level.INFO, "Entrada interrumpida");

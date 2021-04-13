@@ -22,6 +22,8 @@ public class ActividadSalidaPuerta implements Runnable{
 		for (int i = 0; i < NUMSALIDAS; i ++) {
 			try {
 				parque.salirDelParque(puerta);
+				
+				// Cuanto más bajo sea este valor mayor será el tráfico de salida 	
 				TimeUnit.MILLISECONDS.sleep(new Random().nextInt(5)*1000);
 			} catch (InterruptedException e) {
 				Logger.getGlobal().log(Level.INFO, "Salida interrumpida");
