@@ -26,6 +26,7 @@ public class Parque implements IParque{
 			contadoresPersonasPuerta.put(puerta, 0);
 		}
 		
+		System.out.println("soy hilo de entrar");
 		// TODO (abajo)
 		comprobarAntesDeEntrar();
 				
@@ -38,9 +39,11 @@ public class Parque implements IParque{
 		imprimirInfo(puerta, "Entrada");
 		
 		// TODO
+		checkInvariante();
 		
 		
 		// TODO
+		notify();
 		
 	}
 	
@@ -56,7 +59,8 @@ public class Parque implements IParque{
 		if (contadoresPersonasPuerta.get(puerta) == null){
 			contadoresPersonasPuerta.put(puerta, 0);
 		}
-				
+		
+		System.out.println("soy hilo de salir");
 		// TODO
 		comprobarAntesDeSalir();
 						
@@ -69,9 +73,10 @@ public class Parque implements IParque{
 		imprimirInfo(puerta, "Salida");
 				
 		// TODO
-				
+		checkInvariante();
 				
 		// TODO
+		notify();
 	}
 	
 	
@@ -105,16 +110,31 @@ public class Parque implements IParque{
 		//
 		// TODO
 		//
+		
+		if (contadorPersonasTotales == MAX) {
+			try {
+				wait();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	protected void comprobarAntesDeSalir(){		// TODO
 		//
 		// TODO
 		//
+		if (contadorPersonasTotales == MIN) {
+			try {
+				wait();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
-
-
-	
-
-
 }
+
+
+
